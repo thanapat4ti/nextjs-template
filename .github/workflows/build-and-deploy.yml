@@ -54,6 +54,6 @@ jobs:
             ports: 80 443
             azure-file-volume-account-key: ${{ secrets.AZURE_FILE_VOLUME_ACCOUNT_KEY }}
             azure-file-volume-account-name: ${{ secrets.AZURE_FILE_VOLUME_ACCOUNT_NAME }}
-            azure-file-volume-mount-path: /etc/letsencrypt/archive/
+            azure-file-volume-mount-path: /etc/letsencrypt/
             azure-file-volume-share-name: ${{ secrets.AZURE_FILE_VOLUME_SHARE_NAME }}
             

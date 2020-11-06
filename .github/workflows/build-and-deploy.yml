@@ -50,7 +50,7 @@ jobs:
             registry-username: ${{ secrets.DOCKER_HUB_LOGIN }}
             registry-password: ${{ secrets.DOCKER_HUB_SECRET }}
             name: ${{ secrets.AZURE_ACI_NAME }}
-            location: ${{ secret.AZURE_ACI_LOCATION }}
+            location: ${{ secrets.AZURE_ACI_LOCATION }}
             ports: 80 443
             azure-file-volume-account-key: ${{ secrets.AZURE_FILE_VOLUME_ACCOUNT_KEY }}
             azure-file-volume-account-name: ${{ secrets.AZURE_FILE_VOLUME_ACCOUNT_NAME }}

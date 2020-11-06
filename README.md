@@ -14,17 +14,19 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-## Learn More
+## SECRETS variables
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Name | Description
+-----|------------
+APP_DOMAIN_NAME | Full domain of the application
+APP_EMAIL | Email that will be used for Letsencrypt
+DOCKER_HUB_LOGIN | User for docker hub
+DOCKER_HUB_SECRET | Password for docker hub
+DOCKER_IMAGE_NAME | Name of docker repo/image of this code
+AZURE_CREDENTIALS | Result from command ```az ad sp create-for-rbac --name "myApp" --role contributor \ --scopes /subscriptions/{subscription-id}/resourceGroups/{resource-group} \ --sdk-auth```
+AZURE_RESOURCE_GROUP |
+AZURE_ACI_NAME | Azure Container Group Name
+AZURE_ACI_LOCATION | Location of the target Azure Container Instances, this will be a part of the final url name eg. ```southeast asia```
+AZURE_FILE_VOLUME_ACCOUNT_NAME | Name of the az file volume account
+AZURE_FILE_VOLUME_ACCOUNT_KEY | Key of the az file volume account
+AZURE_FILE_VOLUME_SHARE_NAME | Name of the az files share

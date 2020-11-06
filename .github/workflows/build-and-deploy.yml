@@ -1,0 +1,59 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        steps:
+        - run: |
+            echo DOLLAR_SIGN='$' >> $GITHUB_ENV
+            echo APP_DOMAIN_NAME=${{ secrets.APP_DOMAIN_NAME }} >> $GITHUB_ENV
+            echo APP_EMAIL=${{ secrets.APP_EMAIL }} >> $GITHUB_ENV
+
+        # checkout the repo
+        - name: 'Checkout GitHub Action'
+          uses: actions/checkout@master
+
+        - name: 'Render .env file'
+          run: /bin/bash -c "envsubst < ./docker/.env.production > ./.env.production"
+        
+        - name: 'Render nginx.conf'
+          run: /bin/bash -c "envsubst < ./docker/nginx.conf > ./nginx.conf"
+
+        - name: 'Render start.sh'
+          run: /bin/bash -c "envsubst < ./docker/start.sh > ./start.sh"
+
+        - name: 'Build and push image'
+          uses: docker/login-action@v1.6.0
+          with:
+            username: ${{ secrets.DOCKER_HUB_LOGIN }}
+            password: ${{ secrets.DOCKER_HUB_SECRET }}
+        - run: |
+            docker build . -t ${{ secrets.DOCKER_IMAGE_NAME }}:develop
+            docker push ${{ secrets.DOCKER_IMAGE_NAME }}:develop
+
+        - name: 'Login via Azure CLI'
+          uses: azure/login@v1
+          with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+        - name: 'Deploy to Azure Container Instances'
+          uses: 'azure/aci-deploy@v1'
+          with:
+            resource-group: ${{ secrets.AZURE_RESOURCE_GROUP }}
+            dns-name-label: ${{ secret.AZURE_ACI_NAME }}
+            image: ${{ secrets.DOCKER_IMAGE_NAME }}:develop
+            registry-login-server: index.docker.io
+            registry-username: ${{ secrets.DOCKER_HUB_LOGIN }}
+            registry-password: ${{ secrets.DOCKER_HUB_SECRET }}
+            name: ${{ secret.AZURE_ACI_NAME }}
+            location: ${{ secret.AZURE_ACI_LOCATION }}
+            ports: 80 443
+            azure-file-volume-account-key: ${{ secrets.AZURE_FILE_VOLUME_ACCOUNT_KEY }}
+            azure-file-volume-account-name: ${{ secrets.AZURE_FILE_VOLUME_ACCOUNT_NAME }}
+            azure-file-volume-mount-path: /etc/letsencrypt/archive/
+            azure-file-volume-share-name: ${{ secrets.AZURE_FILE_VOLUME_SHARE_NAME }}
+            

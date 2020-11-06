@@ -44,12 +44,12 @@ jobs:
           uses: 'azure/aci-deploy@v1'
           with:
             resource-group: ${{ secrets.AZURE_RESOURCE_GROUP }}
-            dns-name-label: ${{ secret.AZURE_ACI_NAME }}
+            dns-name-label: ${{ secrets.AZURE_ACI_NAME }}
             image: ${{ secrets.DOCKER_IMAGE_NAME }}:develop
             registry-login-server: index.docker.io
             registry-username: ${{ secrets.DOCKER_HUB_LOGIN }}
             registry-password: ${{ secrets.DOCKER_HUB_SECRET }}
-            name: ${{ secret.AZURE_ACI_NAME }}
+            name: ${{ secrets.AZURE_ACI_NAME }}
             location: ${{ secret.AZURE_ACI_LOCATION }}
             ports: 80 443
             azure-file-volume-account-key: ${{ secrets.AZURE_FILE_VOLUME_ACCOUNT_KEY }}

@@ -24,6 +24,7 @@ RUN npm run build
 # Setup services
 RUN rm /etc/nginx/conf.d/default.conf
 ADD ./nginx.conf /etc/nginx/conf.d
+ADD ./www.conf /etc/nginx/sites-available/default
 ADD ./docker/ssl.crt /etc/nginx/ssl/ssl.crt
 ADD ./docker/ssl.key /etc/nginx/ssl/ssl.key
 

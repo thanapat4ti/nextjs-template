@@ -20,8 +20,8 @@ jobs:
         - name: 'Render .env file'
           run: /bin/bash -c "envsubst < ./docker/.env.production > ./.env.production"
         
-        - name: 'Render nginx.conf'
-          run: /bin/bash -c "envsubst < ./docker/nginx.conf > ./nginx.conf"
+        - name: 'Render www.conf'
+          run: /bin/bash -c "envsubst < ./docker/www.conf > ./www.conf"
 
         - name: 'Render start.sh'
           run: /bin/bash -c "envsubst < ./docker/start.sh > ./start.sh"
